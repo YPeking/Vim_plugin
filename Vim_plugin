@@ -1,3 +1,16 @@
+filetype off
+
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" let Vundle manage Vundle
+Bundle 'gmarik/vundle'
+
+" 配置插件
+Bundle 'davidhalter/jedi-vim'
+
+filetype plugin indent on
+
 "设置行号
 set nu
 "语法高亮
@@ -46,3 +59,22 @@ inoremap" ""<ESC>i
 if &t_Co > 1
 	syntax enable
 endif
+
+""""""""""""""""""
+"Quickly Run
+""""""""""""""""""
+map <F5> : call CompileRunGcc()<CR>
+func! CompileRunGcc()
+		exec "w"
+		if &filetype == 'c'
+				exec "!g++ % -o %<"
+		elseif &filetype == 'cpp'
+				exec "!g++ % -o %<"
+		elseif &filetype == 'java'
+				exec "!javac %"
+		elseif &filetype == 'sh'
+				:!bash %
+		elseif &filetype == 'python'
+				exec "!python2.7 %"
+		endif
+endfunc
